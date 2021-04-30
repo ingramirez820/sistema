@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleados;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;// para poder eliminar archivos de storage
 
 class EmpleadosController extends Controller
 {
@@ -41,12 +42,15 @@ class EmpleadosController extends Controller
         //
         /* $datosEmpleado=request()->all(); */
         $datosEmpleado=request()->except('_token');
+
         if($request->hasFile('Foto')){
+            
             $datosEmpleado['Foto']=$request->file('Foto')->store('uploads','public');
         }
 
         Empleados::insert($datosEmpleado);
-        return response()->json($datosEmpleado);
+        //return response()->json($datosEmpleado);
+        return redirect('empleados');
     }
 
     /**
@@ -84,7 +88,14 @@ class EmpleadosController extends Controller
     {
         //
         $datosEmpleado=request()->except(['_token','_method']);
+
+        if($request->hasFile('Foto')){
+            $empleado = Empleados::findOrFail($id);
+            Storage::delete('public/'.$empleado->Foto);
+            $datosEmpleado['Foto']=$request->file('Foto')->store('uploads','public');
+        }
         Empleados::where('id','=',$id)->update($datosEmpleado);
+
         $empleado = Empleados::findOrFail($id);
         return view('empleados.edit',compact('empleado'));
     }
@@ -98,7 +109,11 @@ class EmpleadosController extends Controller
     public function destroy($id)
     {
         //
-        Empleados::destroy($id);
+        $empleado = Empleados::findOrFail($id);
+        if (Storage::delete('public/'.$empleado->Foto)) {
+            Empleados::destroy($id);
+        }
+       
         return redirect('empleados');
     }
 }

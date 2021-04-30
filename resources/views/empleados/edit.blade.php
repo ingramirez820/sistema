@@ -1,6 +1,6 @@
 Sección para editar empleado
 
-<form action="{{ url('/empleados'.$empleado->id) }}" method="post" enctype="multipart/form-data">
+<form action="{{ url('/empleados/'.$empleado->id) }}" method="post" enctype="multipart/form-data">
 {{ csrf_field() }}
 {{method_field('PATCH')}}
 <label for="Nombre">{{ 'Nombre' }}</label>
@@ -17,7 +17,7 @@ Sección para editar empleado
 <br>
 <label for="Foto">{{ 'Foto' }}</label>
 <br>
-{{$empleado->Foto}}
+<img src="{{ asset('storage').'/'.$empleado->Foto }}" alt="" width="200" height="200">
 <input type="file" name="Foto" id="Foto" value="">
 <br>
 <input type="submit" value="Editar">
