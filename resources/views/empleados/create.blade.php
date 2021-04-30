@@ -6,10 +6,10 @@ Sección para crear empleado
 <input type="text" name="Nombre" id="Nombre" value="">
 <br>
 <label for="Apellido Paterno">{{ 'Apellido Paterno' }}</label>
-<input type="text" name="Apellido Paterno" id="Apellido Paterno" value="">
+<input type="text" name="ApellidoPaterno" id="ApellidoPaterno" value="">
 <br>
 <label for="Apellido Materno">{{ 'Apellido Materno' }}</label>
-<input type="text" name="Apellido Materno" id="Apellido Materno" value="">
+<input type="text" name="ApellidoMaterno" id="ApellidoMaterno" value="">
 <br>
 <label for="Correo">{{ 'Correo' }}</label>
 <input type="email" name="Correo" id="Correo" value="">
